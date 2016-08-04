@@ -1,0 +1,99 @@
+
+import java.awt.BorderLayout;
+	import java.awt.Color;
+	import java.awt.EventQueue;
+	import java.awt.event.ActionEvent;
+	import java.awt.event.ActionListener;
+	//import java.util.Timer;
+
+	import javax.swing.Icon;
+	import javax.swing.ImageIcon;
+	import javax.swing.JFrame;
+	import javax.swing.JPanel;
+	import javax.swing.JWindow;	
+	import javax.swing.border.EmptyBorder;
+	import javax.swing.border.LineBorder;
+
+
+import javax.swing.JLabel;
+	import javax.swing.JProgressBar;
+	import javax.swing.Timer;
+	import java.awt.Font;
+	import java.awt.Component;
+	import javax.swing.SwingConstants;
+
+	public class TTCSplashScreen extends JWindow {
+
+		
+		public static void main(String[] args) {
+			
+			TTCSplashScreen frame = new TTCSplashScreen();
+						frame.setVisible(true);
+						frame.doProgress();
+					
+		}
+		private Timer timer ;
+		private int counter=1;
+		JProgressBar progressBar = new JProgressBar();
+		
+		JLabel projectlbl = new JLabel("TIC TAC TOE");
+		private boolean isVisible = true;
+		private void doProgress(){
+			// Anonymous Class 
+			ActionListener al = new ActionListener(){
+				@Override
+				public void actionPerformed(ActionEvent e){
+				projectlbl.setVisible(isVisible);
+					isVisible = !isVisible;
+					progressBar.setValue(counter);
+					if(counter>=100){
+						timer.stop();
+						TTCSplashScreen.this.setVisible(false);
+						TTCSplashScreen.this.dispose();
+						TicTacToe mainScreen = new TicTacToe();
+						mainScreen.setVisible(true);
+					}
+					counter++;
+					
+				}
+			};
+			timer = new Timer(50, al);
+			timer.start();
+		}
+
+		/**
+		 * Create the frame.
+		 */
+		public TTCSplashScreen() {
+			
+			setBounds(100,100, 606, 393);
+			getContentPane().setLayout(null);
+			Icon icon = new ImageIcon(TTCSplashScreen.class.getResource("ttcc.png"));
+			
+			//JProgressBarprogressBar = new JProgressBar();
+			progressBar.setBounds(65, 318, 403, 25);
+			
+			getContentPane().add(progressBar);
+			progressBar.setStringPainted(true);//adding percentage in progress bar
+			progressBar.setForeground(Color.YELLOW);
+			progressBar.setBackground(Color.GREEN);
+		projectlbl.setForeground(Color.DARK_GRAY);
+			projectlbl.setHorizontalAlignment(SwingConstants.LEFT);
+			projectlbl.setLabelFor(this);
+			projectlbl.setAlignmentX(Component.RIGHT_ALIGNMENT);
+			projectlbl.setAlignmentY(Component.TOP_ALIGNMENT);
+			projectlbl.setBackground(Color.CYAN);
+			projectlbl.setFont(new Font("Times New Roman", Font.BOLD, 24));
+			projectlbl.setBounds(165, 346, 165, 36);
+			getContentPane().add(projectlbl);
+			
+			JLabel Welcomeimage = new JLabel("");
+			Welcomeimage.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
+			//Welcomeimage.setHorizontalAlignment(SwingConstants.TRAILING);
+			Welcomeimage.setIcon(icon);
+			Welcomeimage.setBounds(108, 42, 304, 265);
+			getContentPane().add(Welcomeimage);
+		}
+		
+	}
+

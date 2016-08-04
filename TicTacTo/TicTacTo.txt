@@ -1,0 +1,365 @@
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.Font;
+import java.awt.Color;
+
+public class TicTacToe extends JFrame {
+private boolean isXorZero =true ;
+	private JPanel contentPane;
+	JButton onebt = new JButton("");
+	JButton twobt = new JButton("");
+	JButton threebt = new JButton("");
+	JButton fourbt = new JButton("");
+	JButton fivebt = new JButton("");
+	JButton sixbt = new JButton("");
+	JButton sevenbt = new JButton("");
+	JButton eightbt = new JButton("");
+	JButton ninebt = new JButton("");
+	int xwin=0;
+	int Owin=0;
+	int draw=0;
+	int counter =0;
+	JLabel XScore = new JLabel("X score ");
+	JLabel xscorevalue = new JLabel("");
+	JLabel OScore = new JLabel("0 score");
+	JLabel Oscorevalue = new JLabel("");
+	JLabel playerturnValue = new JLabel("");
+	JLabel Turnlabel = new JLabel("Turn");
+	
+	private boolean isXorZeroTurn()
+	{
+		if(isXorZero)
+		{   playerturnValue.setText("X");
+			return true;
+		}
+		else{
+			playerturnValue.setText("O");
+			return false;
+		}
+	}
+	
+		private boolean isNotBlank(JButton button)
+	{
+		
+		if(button.getText().trim().length()==0)
+		{
+			return false;
+			
+		}
+		else
+		{
+			return true;
+		}
+	}
+	private boolean isRowNotBlank(JButton button1,	JButton button2,JButton button3)
+	{
+		if(isNotBlank(button1) && isNotBlank(button2) && isNotBlank(button3))
+		{
+			
+               return true;			
+		}
+		else
+			return false;
+		
+	}
+	private boolean isRowMatch(JButton b1,	JButton b2,JButton b3){
+		if(isRowNotBlank(b1,b2,b3))
+		{
+			if(b1.getText().equals(b2.getText()) &&  b1.getText().equals(b3.getText()))
+			{
+				return true;
+			}
+			else
+				return false;
+		}
+		else
+			return false;
+	}
+	
+private boolean isGameOver(){
+	
+	if(isRowMatch(onebt,twobt,threebt))
+	{
+		return true;
+	}
+	else if(isRowMatch(fourbt,fivebt,sixbt))
+	{
+		return true;
+	}
+	else if(isRowMatch(sevenbt,eightbt,ninebt))
+	{
+		return true;
+	}
+	else if(isRowMatch(onebt,fourbt,sevenbt))
+	{
+		return true;
+	}
+	else if(isRowMatch(twobt,fivebt,eightbt))
+	{
+		return true;
+	}
+	else if(isRowMatch(threebt,sixbt,ninebt))
+	{
+		return true;
+	}
+	else if(isRowMatch(onebt,fivebt,ninebt))
+	{
+		return true;
+	}
+	else if(isRowMatch(threebt,fivebt,sevenbt))
+	{
+		return true; 
+	}
+	else if(full(onebt,twobt,threebt,fourbt,fivebt,sixbt,sevenbt,eightbt,ninebt)){
+		JOptionPane.showMessageDialog(this," Game Draw "+"\n"+" well played");
+		clearButtons();
+	}
+		return false;
+}
+	
+	private static boolean full(JButton... button){
+		for(JButton j:button){
+			if(j.getText()=="")
+				return false;
+		}
+		return true;
+	}
+
+	 private void printXorZero(JButton button)
+	 { if(button.getText().trim().length()==0)
+	 {
+		  if(isXorZero)
+		
+		 {
+			 button.setText("X");
+		 }
+		 else
+		 { 
+			 button.setText("O");
+		 }
+	
+		 isXorZero = !isXorZero;
+		 isXorZeroTurn();
+		 /*if(isXorZero){
+				playerturnvalue.setText("X");
+				
+			}
+			else
+			{
+				playerturnvalue.setText("O");
+			}*/
+	 }
+		
+		 if(isGameOver())
+		 {       
+			 if(button.getText()=="X")
+			 {	 xwin=xwin+1;
+			 xscorevalue.setText(String.valueOf(xwin));
+			 }
+			 else if(button.getText()=="O")
+			 { Owin=Owin+1;
+			 Oscorevalue.setText(String.valueOf(Owin));
+			 }
+			 else 
+		 {
+				 clearButtons();
+		
+		 }
+			 JOptionPane.showMessageDialog(this,"    Game over "+ "\n"+"    Congratulations"+"\n"+"    "+button.getText()+ " wins");
+			 clearButtons();
+		 }
+		
+	 }
+	 private void clearButtons()
+	 {
+		 onebt.setText("");
+		 twobt.setText("");
+		 threebt.setText("");
+		 threebt.setText("");
+		 fourbt.setText("");
+		 fivebt.setText("");
+		 sixbt.setText("");
+		 sevenbt.setText("");
+		 eightbt.setText("");
+		 ninebt.setText("");
+		 }
+	 private void resetButtons()
+	 {
+		 isXorZero = true;
+		 playerturnValue.setText("X");
+		 xwin=0;
+          xscorevalue.setText(String.valueOf(xwin));
+		 Owin=0;
+		 Oscorevalue.setText(String.valueOf(Owin));
+		 draw=0;
+		 clearButtons();
+		
+	 }
+	
+	public static void main(String[] args) {
+		         TicTacToe frame = new TicTacToe();
+					frame.setVisible(true);
+			
+		
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public TicTacToe() {
+		
+		
+		setResizable(false);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 393, 205);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(null);
+		setContentPane(contentPane);
+		
+		
+		onebt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				printXorZero(onebt);
+			}
+		});
+		onebt.setBounds(0, 0, 82, 40);
+		contentPane.add(onebt);
+		
+		
+		twobt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				printXorZero(twobt);
+			}
+		});
+		twobt.setBounds(80, 0, 82, 40);
+		contentPane.add(twobt);
+		
+		
+		threebt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				printXorZero(threebt);
+			}
+		});
+		threebt.setBounds(161, 0, 76, 40);
+		contentPane.add(threebt);
+		
+		
+		fourbt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				printXorZero(fourbt);
+			}
+		});
+		fourbt.setBounds(0, 51, 82, 40);
+		contentPane.add(fourbt);
+		
+		
+		fivebt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				printXorZero(fivebt);
+			}
+		});
+		fivebt.setBounds(80, 51, 82, 40);
+		contentPane.add(fivebt);
+		
+		
+		sixbt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				printXorZero(sixbt);
+			}
+		});
+		sixbt.setBounds(161, 51, 76, 40);
+		contentPane.add(sixbt);
+		
+		
+		sevenbt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				printXorZero(sevenbt);
+			}
+		});
+		sevenbt.setBounds(0, 102, 82, 40);
+		contentPane.add(sevenbt);
+		
+		
+		eightbt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				printXorZero(eightbt);
+			}
+		});
+		eightbt.setBounds(80, 102, 82, 40);
+		contentPane.add(eightbt);
+		
+		
+		ninebt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				printXorZero(ninebt);
+			}
+		});
+		ninebt.setBounds(161, 102, 76, 40);
+		contentPane.add(ninebt);
+		
+		JButton btnNewButton = new JButton("Reset");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				resetButtons();
+			}
+		});
+		ImageIcon imageIcon = new ImageIcon(TicTacToe.class.getResource("tictactoe.jpg"));
+	    this.setIconImage(imageIcon.getImage());
+	    this.setTitle("Tic-Tac-Toe");
+		btnNewButton.setForeground(new Color(128, 0, 128));
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnNewButton.setBounds(80, 148, 82, 23);
+		contentPane.add(btnNewButton);
+		
+		
+		XScore.setBounds(247, 11, 56, 23);
+		contentPane.add(XScore);
+		xscorevalue.setFont(new Font("Tahoma", Font.BOLD, 16));
+		xscorevalue.setBackground(new Color(255, 255, 0));
+		xscorevalue.setBounds(319, 13, 46, 14);
+		
+		contentPane.add(xscorevalue);
+		OScore.setBounds(247, 64, 46, 23);
+		
+		contentPane.add(OScore);
+		Oscorevalue.setFont(new Font("Tahoma", Font.BOLD, 16));
+		Oscorevalue.setBackground(new Color(255, 255, 0));
+		Oscorevalue.setBounds(319, 66, 46, 14);
+		
+		contentPane.add(Oscorevalue);
+		playerturnValue.setBounds(319, 102, 65, 23);
+		
+		contentPane.add(playerturnValue);
+		playerturnValue.setFont(new Font("Tahoma", Font.BOLD, 16));
+		playerturnValue.setBackground(Color.YELLOW);
+		playerturnValue.setBounds(319, 106, 46, 14);
+		contentPane.add(playerturnValue);
+		Turnlabel.setBounds(247, 102, 40, 23);
+		
+		contentPane.add(Turnlabel);
+		if(isXorZero)
+		{
+			playerturnValue.setText("X");
+		}
+		else
+		{
+			playerturnValue.setText("O");
+		}
+		
+		
+	}
+}
